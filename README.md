@@ -35,3 +35,10 @@ In this phase, I built the engine that moves data from my OS to the AI-ready dat
 * **Orchestration:** Deployed the ELK stack using Docker Compose, optimizing RAM for an Arch Linux environment.
 * **Ingestion:** Configured a Logstash pipeline to stream and index ~200k+ events into Elasticsearch.
 * **Health Check:** Verified a "GREEN" cluster status and confirmed data is searchable via Kibana.
+
+## 🧠 Phase 3: Feature Engineering (The Brain)
+In this phase, I connected the Python ML environment to the ELK infrastructure.
+
+* **Environment Setup:** Created a Python virtual environment and resolved version compatibility issues between `elasticsearch-py` (v8) and the Elasticsearch server.
+* **Data Connectivity:** Successfully implemented a connection script to query the Elasticsearch API.
+* **Data Transformation:** Developed a script to pull raw JSON logs and flatten them into a **Pandas DataFrame** for analysis.
