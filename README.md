@@ -1,13 +1,37 @@
-# ai-log-anomaly-detector
+# AI-Based Log Anomaly Detection System
 
-**Phase 1 – Observation:** Initial log distribution shows a high volume of `wpa_supplicant` and kernel logs.
+A DevOps + AI/ML hybrid project designed to detect novel failures in Arch Linux system logs using the ELK stack and Unsupervised Machine Learning.
 
-**Goal:** Determine whether this is baseline normal behavior or a sign of system instability before training the model.
+## 🛠 Tech Stack
+* **OS:** Arch Linux (Kernel 6.x)
+* **Infrastructure:** Docker, Docker Compose
+* **Data Pipeline:** ELK Stack (Elasticsearch, Logstash, Kibana)
+* **ML Brain:** Python, Scikit-learn (Isolation Forest)
+* **Alerting:** Discord Webhooks (Planned)
 
-**Commands:**
+---
+
+## 📈 Phase 1: Data Observation & Analysis
+Before building the pipeline, I analyzed the "Ground Truth" of my system logs using `journalctl`.
+
+### Key Findings:
+* **The "Noise" Floor:** Identified a massive volume of logs from `wpa_supplicant`. 
+    * *Insight:* Connecting to the university network (Presidency-CHK) triggers a flood of `TDLS: Invalid frame` messages. This is "Normal Noise" that the ML model must learn to ignore.
+* **Static Anomalies:** Found consistent ACPI BIOS errors during boot—common for ROG Strix hardware on Linux.
+* **Dynamic Anomalies:** Spotted a `systemd-coredump` (Broken pipe) and `Music Player Daemon` failures. These represent the real failures we want to detect.
+
+### Initial Commands used for Exploration:
 ```bash
-# Top logging services
+# Identify top talkative services
 journalctl | awk '{print $5}' | sort | uniq -c | sort -rn | head -n 10
 
-# Recent wpa_supplicant logs
-journalctl -u wpa_supplicant | tail -n 20
+# View high-priority system errors (Level 0-3)
+journalctl -p 0..3 --since "24 hours ago"
+
+## 🏗 Phase 2: Data Pipeline & Infrastructure
+In this phase, I built the engine that moves data from my OS to the AI-ready database.
+
+* **Log Export:** Captured 7 days of system telemetry (314MB) into a structured JSON snapshot.
+* **Orchestration:** Deployed the ELK stack using Docker Compose, optimizing RAM for an Arch Linux environment.
+* **Ingestion:** Configured a Logstash pipeline to stream and index ~200k+ events into Elasticsearch.
+* **Health Check:** Verified a "GREEN" cluster status and confirmed data is searchable via Kibana.
