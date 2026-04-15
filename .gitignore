@@ -213,3 +213,16 @@ data/
 
 # Ignore Docker's internal data storage
 elasticsearch_data/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Data (Keep the folder, ignore the heavy files)
+data/sample_logs.json
+data/clean_test_logs.json
+data/*.csv
+
+# System
+.DS_Store

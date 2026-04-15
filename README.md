@@ -42,3 +42,9 @@ In this phase, I connected the Python ML environment to the ELK infrastructure.
 * **Environment Setup:** Created a Python virtual environment and resolved version compatibility issues between `elasticsearch-py` (v8) and the Elasticsearch server.
 * **Data Connectivity:** Successfully implemented a connection script to query the Elasticsearch API.
 * **Data Transformation:** Developed a script to pull raw JSON logs and flatten them into a **Pandas DataFrame** for analysis.
+
+
+## 🤖 Phase 4: Anomaly Detection
+* **Model:** Isolation Forest (Unsupervised Learning).
+* **Logic:** Instead of defining "bad" logs, the model identifies "statistical outliers" in the time-series feature matrix.
+* **Goal:** Detect spikes in log volume or service crashes that deviate from the 7-day baseline.
